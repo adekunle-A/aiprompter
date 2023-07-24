@@ -1,24 +1,39 @@
 "use client";
 import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
+import { searchPrompts } from "../utils/searchUtils";
 
-useState;
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [allPosts, setAllPosts] = useState([]);
 
+  //fetchPrompts
+  const fetchPrompts = async () => {
+    const response = await fetch("/api/prompt");
+    const data = await response.json();
+    setAllPosts(data);
+  };
+
   useEffect(() => {
-    //fetchPrompts
-    const fetchPrompts = async () => {
-      const response = await fetch("/api/prompt");
-      const data = await response.json();
-      setAllPosts(data);
-    };
     fetchPrompts();
   }, []);
 
-  const handleSearchChange = (e) => {};
-  const handleTagClick = (tagName) => {};
+  useEffect(() => {
+    if (searchText !== "") {
+      const filteredPrompts = searchPrompts(allPosts, searchText);
+      setAllPosts(filteredPrompts);
+    } else {
+      fetchPrompts();
+    }
+  }, [searchText]);
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchText(e.target.value);
+  };
+  const handleTagClick = (tagName) => {
+    setSearchText(tagName);
+  };
 
   const PromptCardList = ({ data, handleTagClick }) => {
     return (
