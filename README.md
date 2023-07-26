@@ -19,3 +19,9 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Somme tools
 
 This application made use of nosql database(mongodb), tailwind css for styling, nextjs and google authentication for authentication.
+
+## Some future features
+
+Profile updates
+Deletion of prompts
+Trained AI sujjestion on prompt creation
