@@ -1,17 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
+import { debounce } from "@utils/debounce";
+import { useEffect, useState } from "react";
 import { searchPrompts } from "../utils/searchUtils";
 
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [allPosts, setAllPosts] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
 
   //fetchPrompts
   const fetchPrompts = async () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
     setAllPosts(data);
+    setOriginalData(data);
   };
 
   useEffect(() => {
@@ -23,13 +26,18 @@ const Feed = () => {
       const filteredPrompts = searchPrompts(allPosts, searchText);
       setAllPosts(filteredPrompts);
     } else {
-      fetchPrompts();
+      setAllPosts(originalData);
     }
   }, [searchText]);
 
+  // Debounce the search input to avoid frequent API calls
+  const debouncedSearch = debounce((value) => {
+    setSearchText(value);
+  }, 100);
+
   const handleSearchChange = (e) => {
-    e.preventDefault();
-    setSearchText(e.target.value);
+    const { value } = e.target;
+    debouncedSearch(value);
   };
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
