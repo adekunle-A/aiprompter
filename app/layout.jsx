@@ -6,6 +6,7 @@ export const metadata = {
   title: "aiprompter",
   descrition: "Discover and Share awesome AI prompts",
 };
+
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
