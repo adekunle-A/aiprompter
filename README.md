@@ -24,4 +24,4 @@ This application made use of nosql database(mongodb), tailwind css for styling, 
 
 Profile updates
 Deletion of prompts
-Trained AI sujjestion on prompt creation
+Trained AI suggestion on prompt creation
